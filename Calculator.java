@@ -279,33 +279,26 @@ public class Calculator extends JFrame implements ActionListener {
     public void negationPerformed(ActionEvent e) {
         String currentText = EquationLabel.getText();
 
-        // Find the last occurrence of "(-" in the expression
         int lastNegationIndex = currentText.lastIndexOf("(-");
 
         if (lastNegationIndex >= 0) {
-            // If "(-" is found, remove it to toggle the negation
             EquationLabel.setText(currentText.substring(0, lastNegationIndex) +
                     currentText.substring(lastNegationIndex + 2));
         } else if (currentText.isEmpty() || endsWithOperatorOrOpenParenthesis(currentText)) {
-            // If the expression is empty or ends with an operator or (, add a negation followed by (
             EquationLabel.setText(currentText + "(-");
         } else {
-            // If the expression ends with a number or ), add "(-" before it
             int lastNumberStartIndex = findLastNumberStartIndex(currentText);
             EquationLabel.setText(currentText.substring(0, lastNumberStartIndex) +
                     "(-" + currentText.substring(lastNumberStartIndex));
         }
     }
 
-// Helper methods remain unchanged
 
-    // Helper method to check if the expression ends with an operator or (
     private boolean endsWithOperatorOrOpenParenthesis(String expression) {
         char lastChar = expression.charAt(expression.length() - 1);
         return lastChar == '+' || lastChar == '-' || lastChar == '\u00D7' || lastChar == '\u00F7' || lastChar == '(';
     }
 
-    // Helper method to find the start index of the last number in the expression
     private int findLastNumberStartIndex(String expression) {
         int endIndex = expression.length() - 1;
         while (endIndex >= 0 && Character.isDigit(expression.charAt(endIndex))) {
